@@ -24,21 +24,21 @@ int Saltos(const vector<int>& elementos, int pos = 0) {
 	int i, j, k;
 	while (pos <= elementos.size()) {
 		for (i = 1; i <= elementos[0];i++) {
-			if (pos + i == elementos.size()-1) {
+			if (pos + i == elementos.size() - 1) {
 				cout << "0 -> " << i << endl;
 				pos = elementos.size() + 1;
 			}
 			else {
 				for (j = 1; j <= elementos[i];j++) {
-					if (j + i == elementos.size()-1) {
+					if (j + i == elementos.size() - 1) {
 						cout << "0 -> " << i << " -> " << i + j << endl;
 						pos = elementos.size() + 1;
 					}
 					else {
-						
+
 						for (k = 1; k <= elementos[i + j];k++) {
-							if (j + i + k == elementos.size()-1) {
-								cout << "0 -> " << i << " -> " << i + j <<" -> " << i+j+k << endl;
+							if (j + i + k == elementos.size() - 1) {
+								cout << "0 -> " << i << " -> " << i + j << " -> " << i + j + k << endl;
 								pos = elementos.size() + 1;
 							}
 							else if (i == elementos.size() && j == elementos.size() && k == elementos.size()) {
@@ -99,19 +99,35 @@ int main() {
 			Saltos(ent1);
 		}
 		case 3: {
-			int contador = 0;
+			int contador = 0, limite, Nganador;
 			string participante;
 			vector<string> participantes(0);
-			cout << "Ingreso de participantes, ingrese 0 para detener"<< endl;
+			cout << "Ingreso de participantes, ingrese 0 para detener" << endl;
 			while (participante != "0") {
 				cout << "Ingrese el nombre #" << contador << ": ";
 				cin >> participante;
 				participantes.push_back(participante);
+				contador++;
 			}
 			cout << "Numero maximo en random: ";
+			cin >> limite;
 			int* arregloPtr = NULL;
 			arregloPtr = new int[participantes.size()];
 			arregloPtr = fillArray(arregloPtr, participantes.size(), limite);
+			participante = "0";
+			srand(time(NULL));
+			Nganador = 1 + rand() % ((limite + 1) - 1);
+			contador = 1;
+			while (participante == "0") {
+				cout << "Ronda " << contador << "(Numero magico: " << Nganador << "):" << endl;
+				for (int i = 0;i < participantes.size();i++) {
+					cout << participantes[i] << " -> " << arregloPtr[i] << endl;
+					if (arregloPtr[i] == Nganador) {
+						participante = participantes[i];
+						cout << participante;
+					}
+				}
+			}
 		}
 		}
 	}
