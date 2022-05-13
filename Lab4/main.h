@@ -99,33 +99,99 @@ int main() {
 			Saltos(ent1);
 		}
 		case 3: {
-			int contador = 0, limite, Nganador;
+			int contador = 0,contador2=0, limite, Nganador, pos;
 			string participante;
 			vector<string> participantes(0);
+			vector<string> participantes2(0);
 			cout << "Ingreso de participantes, ingrese 0 para detener" << endl;
 			while (participante != "0") {
 				cout << "Ingrese el nombre #" << contador << ": ";
 				cin >> participante;
-				participantes.push_back(participante);
+				if (participante != "0") {
+					participantes.push_back(participante);
+				}
 				contador++;
 			}
 			cout << "Numero maximo en random: ";
 			cin >> limite;
-			int* arregloPtr = NULL;
-			arregloPtr = new int[participantes.size()];
-			arregloPtr = fillArray(arregloPtr, participantes.size(), limite);
+			int* arreglo2Ptr = NULL;
+			arreglo2Ptr = new int[participantes.size()];
+			arreglo2Ptr = fillArray(arreglo2Ptr, participantes.size(), limite);
+			
 			participante = "0";
 			srand(time(NULL));
 			Nganador = 1 + rand() % ((limite + 1) - 1);
 			contador = 1;
 			while (participante == "0") {
+				int* arregloPtr = NULL;
+				arregloPtr = new int[participantes.size()];
+				arregloPtr = arreglo2Ptr;
+				int comparacion = limite;
 				cout << "Ronda " << contador << "(Numero magico: " << Nganador << "):" << endl;
 				for (int i = 0;i < participantes.size();i++) {
 					cout << participantes[i] << " -> " << arregloPtr[i] << endl;
+				}
+				contador2 = 0;
+				for (int i = 0;i < participantes.size();i++){
 					if (arregloPtr[i] == Nganador) {
 						participante = participantes[i];
-						cout << participante;
+						contador2++;
+						pos = i;
 					}
+				}
+				if (contador2 == 1) {
+					cout << "Ganador/a:\n" << participantes[pos] << " -> " << arregloPtr[pos]<< endl;
+				}
+				else if (contador2 == 0) {
+					cout << "Ganador/a:" << endl;
+					for (int i = 0;i < participantes.size();i++) {
+						if (comparacion > abs(Nganador - arregloPtr[i])) {
+							comparacion = abs(Nganador - arregloPtr[i]);
+						}
+					}
+					for (int i = 0;i < participantes.size();i++) {
+						if (abs(Nganador - arregloPtr[i]) == comparacion){
+							participantes2.push_back(participantes[i]);
+						}
+					}
+					int* arreglo2Ptr = NULL;
+					arreglo2Ptr = new int[participantes2.size()];
+
+					for (int i = 0;i < participantes.size();i++) {
+						if (abs(Nganador - arregloPtr[i]) == comparacion) {
+							arreglo2Ptr[contador2] = arregloPtr[i];
+							contador2++;
+						}
+					}
+
+					for (int i = 0;i < participantes2.size();i++) {
+						cout << participantes2[i] << " -> " << arreglo2Ptr[i];
+					}
+					contador2 = 0;
+					comparacion = limite;
+					participantes = participantes2;
+				}
+				else if (contador > 1) {
+					for (int i = 0;i < participantes.size();i++) {
+						if (arregloPtr[i] == Nganador) {
+							participantes2.push_back(participantes[i]);
+						}
+					}
+					int* arreglo2Ptr = NULL;
+					arreglo2Ptr = new int[participantes2.size()];
+					contador2 = 0;
+					for (int i = 0;i < participantes.size();i++) {
+						if (arregloPtr[i] == Nganador) {
+							arreglo2Ptr[contador2] = arregloPtr[i];
+							contador2++;
+						}
+					}
+					for (int i = 0;i < participantes2.size();i++) {
+						cout << participantes2[i] << " -> " << arreglo2Ptr[i];
+					}
+					contador2 = 0;
+					comparacion = limite;
+					participantes = participantes2;
 				}
 			}
 		}
