@@ -98,6 +98,21 @@ int main() {
 			mostrar_vector(ent1);
 			Saltos(ent1);
 		}
+		case 3: {
+			int contador = 0;
+			string participante;
+			vector<string> participantes(0);
+			cout << "Ingreso de participantes, ingrese 0 para detener"<< endl;
+			while (participante != "0") {
+				cout << "Ingrese el nombre #" << contador << ": ";
+				cin >> participante;
+				participantes.push_back(participante);
+			}
+			cout << "Numero maximo en random: ";
+			int* arregloPtr = NULL;
+			arregloPtr = new int[participantes.size()];
+			arregloPtr = fillArray(arregloPtr, participantes.size(), limite);
+		}
 		}
 	}
 }
